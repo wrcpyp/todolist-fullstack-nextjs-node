@@ -1,4 +1,4 @@
-node_modules
+todolist-api/node_modules/
+todolist-api/.env
+node_modules/
 .env
-dist/
-*.log
