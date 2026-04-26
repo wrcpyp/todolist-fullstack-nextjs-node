@@ -3,16 +3,10 @@ const conn = require('../config/db')
 exports.list = async (req, res) => {
     try {
         const userId = req.user.id
-        const [rows] = await conn.query('SELECT * FROM todos WHERE user_id = ?', [userId])
-        res.json({
-            message: 'show data ok',
-            data: rows
-        })
+        const result = await conn.query('SELECT * FROM todos WHERE user_id = $1', [userId])
+        res.json({ message: 'show data ok', data: result.rows })
     } catch (error) {
-        res.status(500).json({
-            message: 'error',
-            error
-        })
+        res.status(500).json({ message: 'error', error })
     }
 }
 
@@ -20,16 +14,10 @@ exports.create = async (req, res) => {
     try {
         const userId = req.user.id
         const task = req.body.task
-        const [result] = await conn.query('INSERT INTO todos (task, user_id) VALUES (?, ?)', [task, userId])
-        res.json({
-            message: 'insert ok',
-            insertId: result.insertId
-        })
+        const result = await conn.query('INSERT INTO todos (task, user_id) VALUES ($1, $2) RETURNING id', [task, userId])
+        res.json({ message: 'insert ok', insertId: result.rows[0].id })
     } catch (error) {
-        res.status(500).json({
-            message: 'error',
-            error
-        })
+        res.status(500).json({ message: 'error', error })
     }
 }
 
@@ -37,24 +25,17 @@ exports.update = async (req, res) => {
     try {
         const id = req.params.id
         const userId = req.user.id
-        const datas = req.body
+        const { task, status } = req.body
 
-        // เช๊คว่า todo นี้เป็นของ user นี้จริงมั้ย
-        const [rows] = await conn.query('SELECT * FROM todos WHERE id = ? AND user_id = ?', [id, userId])
-        if (rows.length === 0) {
-            return res.status(400).json({ message: 'todo not found' })
+        const check = await conn.query('SELECT * FROM todos WHERE id = $1 AND user_id = $2', [id, userId])
+        if (check.rows.length === 0) {
+            return res.status(404).json({ message: 'todo not found' })
         }
 
-        await conn.query('UPDATE todos SET ? WHERE id = ?', [datas, id])
-        res.json({
-            message: 'update ok',
-            updatedId: id
-        })
+        await conn.query('UPDATE todos SET task = $1, status = $2 WHERE id = $3', [task, status, id])
+        res.json({ message: 'update ok', updatedId: id })
     } catch (error) {
-        res.status(500).json({
-            message: 'error',
-            error
-        })
+        res.status(500).json({ message: 'error', error })
     }
 }
 
@@ -63,22 +44,15 @@ exports.remove = async (req, res) => {
         const id = req.params.id
         const userId = req.user.id
 
-        // เช๊คว่า todo นี้เป็นของ user นี้จริงมั้ย
-        const [rows] = await conn.query('SELECT * FROM todos WHERE id = ? AND user_id = ?', [id, userId])
-        if (rows.length === 0) {
-            return res.json({ message: 'todo not found' })
+        const check = await conn.query('SELECT * FROM todos WHERE id = $1 AND user_id = $2', [id, userId])
+        if (check.rows.length === 0) {
+            return res.status(404).json({ message: 'todo not found' })
         }
 
-        await conn.query('DELETE FROM todos WHERE id = ?', [id])
-        res.json({
-            message: 'delete ok',
-            deletedId: id
-        })
+        await conn.query('DELETE FROM todos WHERE id = $1', [id])
+        res.json({ message: 'delete ok', deletedId: id })
     } catch (error) {
-        res.status(500).json({
-            message: 'error',
-            error
-        })
+        res.status(500).json({ message: 'error', error })
     }
 }
 
@@ -86,21 +60,14 @@ exports.removeAll = async (req, res) => {
     try {
         const userId = req.user.id
 
-        // เช๊คว่า todo นี้เป็นของ user นี้จริงมั้ย
-        const [rows] = await conn.query('SELECT * FROM todos WHERE user_id = ?', [userId])
-        if (rows.length === 0) {
-            return res.json({ message: 'todo not found' })
+        const check = await conn.query('SELECT * FROM todos WHERE user_id = $1', [userId])
+        if (check.rows.length === 0) {
+            return res.status(404).json({ message: 'todo not found' })
         }
 
-        await conn.query('DELETE FROM todos WHERE user_id = ?', [userId])
-        res.json({
-            message: 'delete ok',
-            deletedUserId: userId
-        })
+        await conn.query('DELETE FROM todos WHERE user_id = $1', [userId])
+        res.json({ message: 'delete ok', deletedUserId: userId })
     } catch (error) {
-        res.status(500).json({
-            message: 'error',
-            error
-        })
+        res.status(500).json({ message: 'error', error })
     }
 }

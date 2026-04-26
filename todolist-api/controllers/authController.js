@@ -8,17 +8,18 @@ exports.register = async (req, res) => {
         const passwordHashed = await bycrypt.hash(password, 10)
 
         // เช็คก่อนว่ามี username นี่อยู่แล้วรึป่าว
-        const [rows] = await conn.query('SELECT * FROM users WHERE username = ?', [username])
-        if (rows.length !== 0) {
+        const result = await conn.query('SELECT * FROM users WHERE username = $1', [username])
+        if (result.rows.length !== 0) {
             return res.json({ message: 'username already exits' })
         }
 
-        const results = await conn.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, passwordHashed])
+        const results = await conn.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, passwordHashed])
         res.json({
             message: 'register success',
             data: { username, passwordHashed }
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             message: 'register error',
             error
@@ -31,15 +32,15 @@ exports.login = async (req, res) => {
         const { username, password } = req.body
 
         // เช็คว่า username ตรงที่มีในฐานข้อมูลรึป่าว
-        const [rows] = await conn.query('SELECT * FROM users WHERE username = ?', [username])
-        if (rows.length === 0) {
+        const result = await conn.query('SELECT * FROM users WHERE username = $1', [username])
+        if (result.rows.length === 0) {
             return res.status(400).json({ message: 'username incorrect' })
         }
 
         // เอา password มา check กับข้อมูลในฐานข้อมูล
-        const isMatch = await bycrypt.compare(password, rows[0].password)
+        const isMatch = await bycrypt.compare(password, result.rows[0].password)
         if (isMatch) {
-            const token = jwt.sign({ id: rows[0].id, username: username }, 'secret_key', { expiresIn: '1d' })
+            const token = jwt.sign({ id: result.rows[0].id, username: username }, process.env.JWT_SECRET, { expiresIn: '1d' })
             res.json({
                 message: 'login success',
                 token

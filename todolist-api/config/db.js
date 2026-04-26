@@ -1,10 +1,8 @@
-const mysql = require('mysql2/promise')
+const { Pool } = require('pg')
 
-const conn = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'todolist'
+const conn = new Pool({
+    connectionString: process.env.DB_URL,
+    ssl: { rejectUnauthorized: false }
 })
 
 module.exports = conn
