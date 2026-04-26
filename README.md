@@ -28,12 +28,14 @@
 
 ### 📂 Project Structure
 ```text
-.
 ├── todolist-api/       # Backend (Node.js/Express)
-│   ├── config/         # Database connection
-│   ├── controllers/    # Business logic (Auth & Todo)
-│   ├── middleware/     # JWT Authentication middleware
-│   └── server.js       # Entry point
+│   ├── config/         # การเชื่อมต่อ Database (db.js)
+│   ├── controllers/    # ส่วนควบคุม Logic (authController, todoController)
+│   ├── routes/         # ตัวกำหนดเส้นทาง API (authRoutes, todoRoutes)
+│   ├── middleware/     # ส่วนเช็คความปลอดภัย (authMiddleware)
+│   ├── .env            # ไฟล์เก็บความลับ (ห้าม Push!)
+│   ├── .env.example    # ไฟล์ตัวอย่างสำหรับคนอื่น
+│   └── server.js       # จุดเริ่มต้นของโปรแกรม
 └── [frontend-folder]   # โฟลเดอร์ React ของคุณ
 ```
 
