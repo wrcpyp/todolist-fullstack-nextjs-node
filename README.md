@@ -1,9 +1,6 @@
 # 📝 Modern TodoList Fullstack
 > **Fullstack Application** สำหรับจัดการสิ่งที่ต้องทำ พร้อมระบบสมาชิก (Auth) เชื่อมต่อข้อมูลแบบ Real-time ด้วย Supabase
 
-[![Tech Stack](https://img.shields.io/badge/Stack-Fullstack-blue)](https://github.com/wrcpyp/todolist-fullstack-react-node)
-[![Database](https://img.shields.io/badge/Database-Supabase-green)](https://supabase.com)
-
 ---
 
 ### ✨ Features
