@@ -34,4 +34,28 @@
 │   ├── controllers/    # Business logic (Auth & Todo)
 │   ├── middleware/     # JWT Authentication middleware
 │   └── server.js       # Entry point
-└── [frontend-folder]   # โฟลเดอร์ React ของคุณ (ถ้ามี)
+└── [frontend-folder]   # โฟลเดอร์ React ของคุณ
+
+### 📦 Installation & Setup
+
+#### 1. Initial Step
+```bash
+git clone [https://github.com/wrcpyp/todolist-fullstack-react-node.git](https://github.com/wrcpyp/todolist-fullstack-react-node.git)
+cd todolist-fullstack-react-node
+#### 2. Backend Setup
+cd todolist-api
+npm install
+# Setup Environment Variables
+# สร้างไฟล์ .env แล้วใส่ค่าตามหัวข้อด้านล่าง
+#### 3. Start Development
+# รัน Server ด้วย Nodemon
+npm run dev
+
+### 🔑 Environment Variables
+สร้างไฟล์ `.env` ไว้ที่โฟลเดอร์ `todolist-api/` และระบุค่าดังนี้:
+
+| Variable | Description |
+| :--- | :--- |
+| `DB_URL` | PostgreSQL Connection String (จาก Supabase พอร์ต 5432) |
+| `JWT_SECRET` | คีย์ลับสำหรับสร้างและตรวจสอบ Token |
+| `PORT` | 8000 (หรือพอร์ตที่ต้องการรัน) |
