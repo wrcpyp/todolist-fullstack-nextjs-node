@@ -10,7 +10,7 @@ exports.register = async (req, res) => {
         // เช็คก่อนว่ามี username นี่อยู่แล้วรึป่าว
         const result = await conn.query('SELECT * FROM users WHERE username = $1', [username])
         if (result.rows.length !== 0) {
-            return res.json({ message: 'username already exits' })
+            return res.status(409).json({ message: 'username already exits' })
         }
 
         const results = await conn.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, passwordHashed])
