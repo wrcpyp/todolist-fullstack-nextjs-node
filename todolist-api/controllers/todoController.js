@@ -71,3 +71,22 @@ exports.removeAll = async (req, res) => {
         res.status(500).json({ message: 'error', error })
     }
 }
+
+exports.toggleStatus = async (req, res) => {
+    try {
+        const id = req.params.id
+        const userId = req.user.id
+
+        const check = await conn.query('SELECT * FROM todos WHERE id = $1 AND user_id = $2', [id, userId])
+        if (check.rows.length === 0) {
+            return res.status(404).json({ message: 'todo not found' })
+        }
+
+        const current = check.rows[0].status
+        await conn.query('UPDATE todos SET status = $1 WHERE id = $2', [!current, id])
+        res.json({ message: 'toggle ok' })
+    } catch (error) {
+        res.status(500).json({ message: 'error', error })
+    }
+}
+

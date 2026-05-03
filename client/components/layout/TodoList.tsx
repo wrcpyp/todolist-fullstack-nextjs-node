@@ -1,10 +1,36 @@
 import TodoItem from "./TodoItem"
 
-type Props = {}
+type Todo = {
+    id: number
+    task: string
+    status: boolean
+}
 
-const TodoList = (props: Props) => {
+type Props = {
+    todos: Todo[]
+    onDelete: (id: number) => void
+    filter: string
+    isTodoDone: (id: number) => void
+}
+
+const TodoList = ({ todos, onDelete, filter, isTodoDone }: Props) => {
+
+    const filtered = todos.filter((todo) => {
+        if (filter === "active") {
+            return !todo.status
+        }
+        if (filter === "done") {
+            return todo.status
+        }
+        return true
+    })
+
     return (
-        <TodoItem />
+        <div>
+            {filtered.map((todo: any) => (
+                <TodoItem key={todo.id} task={todo} onDelete={onDelete} isTodoDone={isTodoDone} />
+            ))}
+        </div>
     )
 }
 

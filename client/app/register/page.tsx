@@ -3,6 +3,8 @@
 import axios from "axios"
 import { redirect } from "next/navigation"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 type Props = {}
 
@@ -13,6 +15,8 @@ const RegisterPage = (props: Props) => {
     const [passwordConfirm, setPasswordConfirm] = useState("")
     const [passwordCheck, setPasswordCheck] = useState("")
     const [usernameCheck, setUsernameCheck] = useState("")
+
+    const router = useRouter()
 
     const hadleSubmit = async () => {
         try {
@@ -28,7 +32,8 @@ const RegisterPage = (props: Props) => {
                 password
             })
 
-            console.log("regsiter success")
+            toast.success("register success!")
+            router.push('/login')
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 if (error.response?.status === 409) {
