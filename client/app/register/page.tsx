@@ -69,7 +69,7 @@ const RegisterPage = (props: Props) => {
                         onChange={(e) => setUsername(e.target.value)}
                         type="text"
                         placeholder="Username"
-                        className="rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-[14px] text-[#f0ece4] placeholder-white/20 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.06]"
+                        className="rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-[16px] text-[#f0ece4] placeholder-white/20 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.06]"
                     />
                 </div>
 
@@ -82,7 +82,7 @@ const RegisterPage = (props: Props) => {
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         placeholder="••••••••"
-                        className="rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-[14px] text-[#f0ece4] placeholder-white/20 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.06]"
+                        className="rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-[16px] text-[#f0ece4] placeholder-white/20 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.06]"
                     />
                 </div>
 
@@ -95,7 +95,7 @@ const RegisterPage = (props: Props) => {
                         onChange={(e) => setPasswordConfirm(e.target.value)}
                         type="password"
                         placeholder="••••••••"
-                        className="rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-[14px] text-[#f0ece4] placeholder-white/20 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.06]"
+                        className="rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-[16px] text-[#f0ece4] placeholder-white/20 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.06]"
                     />
                 </div>
 
