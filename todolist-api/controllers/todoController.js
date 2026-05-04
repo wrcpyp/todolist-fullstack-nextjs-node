@@ -32,7 +32,10 @@ exports.update = async (req, res) => {
             return res.status(404).json({ message: 'todo not found' })
         }
 
-        await conn.query('UPDATE todos SET task = $1, status = $2 WHERE id = $3', [task, status, id])
+        const currentStatus = check.rows[0].status
+        const newStatus = status !== undefined ? status : currentStatus
+
+        await conn.query('UPDATE todos SET task = $1, status = $2 WHERE id = $3', [task, newStatus, id])
         res.json({ message: 'update ok', updatedId: id })
     } catch (error) {
         res.status(500).json({ message: 'error', error })

@@ -11,9 +11,10 @@ type Props = {
     onDelete: (id: number) => void
     filter: string
     isTodoDone: (id: number) => void
+    onEdit: (id: number, task: string) => void
 }
 
-const TodoList = ({ todos, onDelete, filter, isTodoDone }: Props) => {
+const TodoList = ({ todos, onDelete, filter, isTodoDone, onEdit }: Props) => {
 
     const filtered = todos.filter((todo) => {
         if (filter === "active") {
@@ -28,7 +29,7 @@ const TodoList = ({ todos, onDelete, filter, isTodoDone }: Props) => {
     return (
         <div>
             {filtered.map((todo: any) => (
-                <TodoItem key={todo.id} task={todo} onDelete={onDelete} isTodoDone={isTodoDone} />
+                <TodoItem key={todo.id} task={todo} onDelete={onDelete} isTodoDone={isTodoDone} onEdit={onEdit} />
             ))}
         </div>
     )

@@ -56,6 +56,32 @@ const page = () => {
         }
     }
 
+    const editTask = async (id: number, task: string) => {
+        try {
+            const token = localStorage.getItem("token")
+            await axios.put(`http://localhost:8000/api/todos/${id}`, { task }, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            fetchTodos()
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
+    const deleteAllTask = async () => {
+        try {
+            const token = localStorage.getItem("token")
+            await axios.delete("http://localhost:8000/api/todos", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            fetchTodos()
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
     const isTodoDone = async (id: number) => {
         const token = localStorage.getItem("token")
         await axios.patch(`http://localhost:8000/api/todos/${id}`, {}, {
@@ -84,9 +110,9 @@ const page = () => {
                 </div>
                 <TodoInput onAdd={fetchTodos} />
                 <TodoFilter filter={filter} setFilter={setFilter} />
-                <TodoList todos={todos} onDelete={deleteTask} filter={filter} isTodoDone={isTodoDone} />
+                <TodoList todos={todos} onDelete={deleteTask} filter={filter} isTodoDone={isTodoDone} onEdit={editTask} />
                 <hr className="border-[#222] mb-4" />
-                <button className="w-full py-2.5 text-sm text-[#444] border border-[#2a2a2a] rounded-xl hover:border-[#444] hover:text-[#888] transition-all">Clear All</button>
+                <button onClick={() => deleteAllTask()} className="cursor-pointer w-full py-2.5 text-sm text-[#444] border border-[#2a2a2a] rounded-xl hover:border-[#444] hover:text-[#888] transition-all">Clear All</button>
             </div>
         </div>
     )
