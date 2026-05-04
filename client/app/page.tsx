@@ -32,7 +32,7 @@ const page = () => {
     const fetchTodos = async () => {
         try {
             const token = localStorage.getItem("token")
-            const res = await axios.get("http://localhost:8000/api/todos", {
+            const res = await axios.get("http://todolist-fullstack-nextjs-node-production.up.railway.app/api/todos", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -47,7 +47,7 @@ const page = () => {
     const deleteTask = async (id: number) => {
         try {
             const token = localStorage.getItem("token")
-            await axios.delete(`http://localhost:8000/api/todos/${id}`, {
+            await axios.delete(`http://todolist-fullstack-nextjs-node-production.up.railway.app/api/todos/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             fetchTodos()
@@ -59,7 +59,7 @@ const page = () => {
     const editTask = async (id: number, task: string) => {
         try {
             const token = localStorage.getItem("token")
-            await axios.put(`http://localhost:8000/api/todos/${id}`, { task }, {
+            await axios.put(`http://todolist-fullstack-nextjs-node-production.up.railway.app/api/todos/${id}`, { task }, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             fetchTodos()
@@ -71,7 +71,7 @@ const page = () => {
     const deleteAllTask = async () => {
         try {
             const token = localStorage.getItem("token")
-            await axios.delete("http://localhost:8000/api/todos", {
+            await axios.delete("http://todolist-fullstack-nextjs-node-production.up.railway.app/api/todos", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -84,7 +84,7 @@ const page = () => {
 
     const isTodoDone = async (id: number) => {
         const token = localStorage.getItem("token")
-        await axios.patch(`http://localhost:8000/api/todos/${id}`, {}, {
+        await axios.patch(`http://todolist-fullstack-nextjs-node-production.up.railway.app/api/todos/${id}`, {}, {
             headers: { Authorization: `Bearer ${token}` }
         })
         fetchTodos()

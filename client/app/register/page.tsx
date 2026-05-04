@@ -27,7 +27,7 @@ const RegisterPage = (props: Props) => {
                 return setPasswordCheck("Password not match!")
             }
 
-            const res = await axios.post("http://localhost:8000/api/register", {
+            const res = await axios.post("http://todolist-fullstack-nextjs-node-production.up.railway.app/api/resgister", {
                 username,
                 password
             })

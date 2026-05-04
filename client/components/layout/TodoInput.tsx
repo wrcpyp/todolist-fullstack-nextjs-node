@@ -15,7 +15,7 @@ const TodoInput = ({ onAdd }: Props) => {
         e.preventDefault()
         try {
             const token = localStorage.getItem("token")
-            await axios.post("http://localhost:8000/api/todos", { task }, {
+            await axios.post("http://todolist-fullstack-nextjs-node-production.up.railway.app/api/todos", { task }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -18,7 +18,7 @@ const LoginPage = (props: Props) => {
         setError("")
 
         try {
-            const res = await axios.post("http://localhost:8000/api/login", {
+            const res = await axios.post("http://todolist-fullstack-nextjs-node-production.up.railway.app/api/login", {
                 username,
                 password
             })
